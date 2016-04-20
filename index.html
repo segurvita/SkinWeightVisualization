@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <input id="inputAng" type="number" value="30"/>
+        <input id="inputAng" type="number" value="30" />
     </div>
     <div>
         <svg id="svg" width="1000" height="1000">
@@ -70,13 +70,15 @@
                     //肩
                     this.Joint[0] = {
                         x: this._Mx + this.Fw * (this.Nj - 1) / 2,
-                        y: this._My - this.Fh / 2
+                        y: this._My - this.Fh / 2,
+                        domBone: null
                     };
 
                     //肘
                     this.Joint[1] = {
                         x: this._Mx + this.Fw * (this.Nj - 1) / 2,
                         y: this._My + this.Fh * (this.Ni - 1) / 2,
+                        domBone: null
                     };
 
                     //手首
@@ -84,6 +86,7 @@
                     this.Joint[2] = {
                         x: this.Joint[1].x + armLength * Math.sin(this._ang),
                         y: this.Joint[1].y + armLength * Math.cos(this._ang),
+                        domBone: null
                     };
                 },
 
@@ -110,16 +113,20 @@
                                 Org: {
                                     x: this._Mx + this.Fw * j, //x座標の初期値
                                     y: OrgY, //y座標の初期値
+                                    domPolygon: null
                                 },
                                 Elbow: {
                                     x: 0,
-                                    y: 0
+                                    y: 0,
+                                    domPolygon: null
                                 },
                                 Skin: {
                                     x: 0,
-                                    y: 0
+                                    y: 0,
+                                    domPolygon: null
                                 },
-                                s: sw
+                                s: sw,
+                                domLine: null
                             };
                         }
                     }
@@ -358,7 +365,7 @@
                 //変形後メイン
                 PolygonMain.clearPolygon("Skin");
                 PolygonMain.clearJoint();
-                
+
 
                 //変形後サブ
                 PolygonSub.clearPolygon("Org");
@@ -368,7 +375,7 @@
                 PolygonSub.clearJoint();
             });
 
-            
+
         });
     </script>
 </body>
