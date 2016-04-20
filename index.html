@@ -2,14 +2,30 @@
 <html>
 <head>
     <title>SVG Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>
     <div>
         <svg width="500" height="500">
-            <polygon points="220,10 300,210 170,250 123,234" style="fill: lime; stroke: purple; stroke-width: 1" />
-            <path fill="#88BB33" d="M124,89c0,27-22,49-49,49s-49-22-49-49S47,40,75,40.6S124,62,124,89z">
+            <polygon id="abc" points="220,10 300,210 170,250 123,234" style="fill: lime; stroke: purple; stroke-width: 1" />
+            <path id="circle_path"
+                fill="#88BB33" d="M124,89c0,27-22,49-49,49s-49-22-49-49S47,40,75,40.6S124,62,124,89z">
+                <animate attributeName="d"
+                    values="M124,89c0,27-22,49-49,49s-49-22-49-49S47,40,75,40.6S124,62,124,89z;M154,89c0,27-52,49-79,49s-49-22-49-49S47,40,75,40.6S154,62,154,89z"
+                    dur="1.2s"
+                    repeatCount="1"
+                    begin="indefinite"
+                    id="circle_animate">
+                </animate>
             </path>
         </svg>
     </div>
+    <script type="text/javascript">
+        $(function(){
+            //ƒAƒjƒ‚ğ“®ì‚³‚¹‚é
+            var animate = document.getElementById('circle_animate');
+            animate.beginElement();
+        });
+    </script>
 </body>
 </html>
