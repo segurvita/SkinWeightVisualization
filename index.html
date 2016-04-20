@@ -60,12 +60,6 @@
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
 
-                //描画
-                draw: function (flgSkin, color) {
-                    this.drawPolygon(flgSkin, color);
-                    this.drawJoint();
-                },
-
                 //関節群構築
                 initJoint: function () {
                     this.Joint = [];
@@ -210,7 +204,7 @@
                     }
                 },
 
-                //ポリゴン群構築
+                //ポリゴン描画
                 drawPolygon: function (mode, color) {
                     var i, j;   //反復用
 
@@ -248,7 +242,7 @@
                     return vertex2d.x + "," + vertex2d.y;
                 },
 
-                //ポリゴン群構築
+                //線描画
                 drawLine: function () {
                     var i, j;   //反復用
 
@@ -291,31 +285,36 @@
             //変形前
             //------------------------------
             var Polygon0 = new PolygonMesh(0, X0, Y0);
-            Polygon0.draw("Skin", skinColor);
+            Polygon0.drawPolygon("Skin", skinColor);
+            Polygon0.drawJoint();
 
             //------------------------------
             //50
             //------------------------------
             var Polygon50 = new PolygonMesh(50, X1, Y0);
-            Polygon50.draw("Skin", skinColor);
+            Polygon50.drawPolygon("Skin", skinColor);
+            Polygon50.drawJoint();
 
             var Polygon50s = new PolygonMesh(50, X1, Y1);
-            Polygon50s.draw("Org", shoulderColor);
-            Polygon50s.draw("Elbow", elbowColor);
+            Polygon50s.drawPolygon("Org", shoulderColor);
+            Polygon50s.drawPolygon("Elbow", elbowColor);
             Polygon50s.drawLine();
-            Polygon50s.draw("Skin", skinColor);
+            Polygon50s.drawPolygon("Skin", skinColor);
+            Polygon50s.drawJoint();
 
             //------------------------------
             //100
             //------------------------------
             var Polygon100 = new PolygonMesh(100, X2, Y0);
-            Polygon100.draw("Skin", skinColor);
+            Polygon100.drawPolygon("Skin", skinColor);
+            Polygon100.drawJoint();
 
             var Polygon100s = new PolygonMesh(100, X2, Y1);
-            Polygon100s.draw("Org", shoulderColor);
-            Polygon100s.draw("Elbow", elbowColor);
+            Polygon100s.drawPolygon("Org", shoulderColor);
+            Polygon100s.drawPolygon("Elbow", elbowColor);
             Polygon100s.drawLine();
-            Polygon100s.draw("Skin", skinColor);
+            Polygon100s.drawPolygon("Skin", skinColor);
+            Polygon100s.drawJoint();
         });
     </script>
 </body>
