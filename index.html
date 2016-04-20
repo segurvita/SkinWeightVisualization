@@ -51,7 +51,8 @@
                     //見た目の設定
                     var strPolygonColorR = Math.round(i * 255 / Ni);
                     var strPolygonColorG = Math.round(j * 255 / Nj);
-                    var strPolygonColor = "rgb(" + strPolygonColorR + ", " + strPolygonColorG + ", 0)";
+                    var strPolygonColorB = 200 - Math.round((i + j) * 200 / (Ni + Nj));
+                    var strPolygonColor = "rgb(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ")";
                     var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
                     domPolygon.setAttribute("style", strPolygonStyle);
 
