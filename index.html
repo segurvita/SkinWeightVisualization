@@ -36,8 +36,9 @@
                         this.Vertex[i] = [];
                         for (j = 0; j < this.Nj; j++) {
                             this.Vertex[i][j] = {
-                                x: this.Fw * j,
-                                y: this.Fh * i
+                                x: this.Fw * j, //x座標
+                                y: this.Fh * i, //y座標
+                                s: (1.0 - Math.Round(i / this.Ni))  //スキンウェイト
                             };
                         }
                     }
