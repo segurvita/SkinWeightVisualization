@@ -179,11 +179,11 @@
                             var strVertexD = this.stringVertex(this.Vertex[i + 1][j][mode]);
 
                             //ポリゴンDOMの生成
-                            var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                            this.Vertex[i][j][mode].domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 
                             //頂点の設定
                             var strPolygonPoints = strVertexA + " " + strVertexB + " " + strVertexC + " " + strVertexD;
-                            domPolygon.setAttribute("points", strPolygonPoints);
+                            this.Vertex[i][j][mode].domPolygon.setAttribute("points", strPolygonPoints);
 
                             //見た目の設定
                             var strPolygonColorR = color.r - Math.round(j * 180 / this.Nj);
@@ -191,10 +191,21 @@
                             var strPolygonColorB = color.b - Math.round(j * 180 / this.Nj);
                             var strPolygonColor = "rgba(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ", 0.5)";
                             var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
-                            domPolygon.setAttribute("style", strPolygonStyle);
+                            this.Vertex[i][j][mode].domPolygon.setAttribute("style", strPolygonStyle);
 
                             //SVGタグに追加
-                            domSvg.appendChild(domPolygon);
+                            domSvg.appendChild(this.Vertex[i][j][mode].domPolygon);
+                        }
+                    }
+                },
+
+                //ポリゴン描画
+                clearPolygon: function (mode) {
+                    var i, j;   //反復用
+
+                    for (i = 0; i < this.Ni - 1; i++) {
+                        for (j = 0; j < this.Nj - 1; j++) {
+                            domSvg.removeChild(this.Vertex[i][j][mode].domPolygon);
                         }
                     }
                 },
@@ -334,9 +345,14 @@
                 //------------------------------
 
                 //変形後メイン
+                PolygonMain.clearPolygon("Skin");
                 PolygonMain.clearJoint();
+                
 
                 //変形後サブ
+                PolygonSub.clearPolygon("Org");
+                PolygonSub.clearPolygon("Elbow");
+                PolygonSub.clearPolygon("Skin");
                 PolygonSub.clearJoint();
             });
 
