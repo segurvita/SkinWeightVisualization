@@ -15,6 +15,7 @@
             var domSvg = document.getElementById("svg");
 
             var PolygonMesh = {
+                arg: 30 * (Math.PI / 180),   //角度
                 Ni: 9,    //最大値
                 Nj: 5,     //最大値
                 Fw: 30, //面の幅
@@ -49,9 +50,10 @@
                     };
 
                     //手首
+                    var armLength = this.Fh * (this.Ni - 1) / 2;
                     this.Joint[2] = {
-                        x: this.Margin + this.Fw * (this.Nj - 1) / 2,
-                        y: this.Margin + this.Fh * (this.Ni - 1),
+                        x: this.Joint[1].x + armLength * Math.sin(this.arg),
+                        y: this.Joint[1].y + armLength * Math.cos(this.arg),
                     };
                 },
 
@@ -96,7 +98,7 @@
                 },
 
                 //スキンウェイトを反映
-                applySkinWeight: function(){
+                applySkinWeight: function () {
                     var i, j;   //反復用
 
                     for (i = 0; i < this.Ni; i++) {
