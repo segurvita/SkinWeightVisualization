@@ -6,10 +6,10 @@
 </head>
 <body>
     <div>
-        <input id="inputAng" type="range" value="0" min="-180" max="180"/>
+        <input id="inputAng" type="range" value="0" min="-360" max="360" style="width:620px;"/>
     </div>
     <div>
-        <svg id="svg" width="1000" height="1000">
+        <svg id="svg" width="620" height="620">
         </svg>
     </div>
     <script type="text/javascript">
@@ -333,8 +333,8 @@
             //------------------------------
             //座標
             //------------------------------
-            var X0 = 100, X1 = 400, X2 = 600;
-            var Y0 = 100, Y1 = 400;
+            var X0 = 100, X1 = 400;
+            var Y0 = 100;
             var skinColor = { r: 252, g: 226, b: 196 };
             var shoulderColor = { r: 196, g: 252, b: 226 };
             var elbowColor = { r: 226, g: 196, b: 252 };
@@ -344,12 +344,12 @@
             //------------------------------
 
             //変形後メイン
-            var PolygonMain = new PolygonMesh(0, X1, Y0);
+            var PolygonMain = new PolygonMesh(0, X0, Y0);
             PolygonMain.drawPolygon("Skin", skinColor);
             PolygonMain.drawJoint();
 
             //変形後サブ
-            var PolygonSub = new PolygonMesh(0, X1, Y1);
+            var PolygonSub = new PolygonMesh(0, X1, Y0);
             PolygonSub.drawPolygon("Org", shoulderColor);
             PolygonSub.drawPolygon("Elbow", elbowColor);
             PolygonSub.drawPolygon("Skin", skinColor);
@@ -359,7 +359,7 @@
             //------------------------------
             //角度変更
             //------------------------------
-            $("#inputAng").change(function () {
+            $('#inputAng').on('input', function () {
                 //入力取得
                 var newAng = $(this).val();
                 if (!isFinite(newAng)) {
