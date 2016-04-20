@@ -6,6 +6,9 @@
 </head>
 <body>
     <div>
+        <input id="inputAng" type="number" value="0"/>
+    </div>
+    <div>
         <svg id="svg" width="1000" height="1000">
         </svg>
     </div>
@@ -22,9 +25,9 @@
             var PolygonMesh = function (numArg, numMarginX, numMarginY) {
                 //引数検査
                 if (isFinite(numArg)) {
-                    this._arg = numArg * (Math.PI / 180);
+                    this._ang = numArg * (Math.PI / 180);
                 } else {
-                    this._arg = 0;
+                    this._ang = 0;
                 }
 
                 if (isFinite(numMarginX)) {
@@ -54,7 +57,7 @@
                 Fh: 30,     //面の高さ
 
                 //メンバ変数
-                _arg: 0,    //角度
+                _ang: 0,    //角度
                 _Mx: 0,     //余白
                 _My: 0,     //余白
                 Vertex: [], //頂点群
@@ -79,8 +82,8 @@
                     //手首
                     var armLength = this.Fh * (this.Ni) / 2;
                     this.Joint[2] = {
-                        x: this.Joint[1].x + armLength * Math.sin(this._arg),
-                        y: this.Joint[1].y + armLength * Math.cos(this._arg),
+                        x: this.Joint[1].x + armLength * Math.sin(this._ang),
+                        y: this.Joint[1].y + armLength * Math.cos(this._ang),
                     };
                 },
 
@@ -142,8 +145,8 @@
                             };
 
                             //角度
-                            var Cos = Math.cos(this._arg);
-                            var Sin = Math.sin(this._arg);
+                            var Cos = Math.cos(this._ang);
+                            var Sin = Math.sin(this._ang);
 
                             //変形後肘座標系
                             var E = {
