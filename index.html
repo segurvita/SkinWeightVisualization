@@ -202,7 +202,7 @@
                             var strPolygonColorR = Math.round(i * 255 / this.Ni);
                             var strPolygonColorG = Math.round(j * 255 / this.Nj);
                             var strPolygonColorB = 200 - Math.round((i + j) * 200 / (this.Ni + this.Nj));
-                            var strPolygonColor = "rgb(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ")";
+                            var strPolygonColor = "rgba(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ", 0.5)";
                             var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
                             domPolygon.setAttribute("style", strPolygonStyle);
 
