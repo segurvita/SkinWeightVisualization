@@ -28,8 +28,8 @@
                     this.initJoint();
                     this.initVertex();
                     this.applySkinWeight();
-                    this.initPolygon();
-                    this.redrawJoint();
+                    this.drawPolygon();
+                    this.drawJoint();
                 },
 
                 //関節群構築
@@ -56,7 +56,7 @@
                 },
 
                 //関節群描画
-                redrawJoint: function () {
+                drawJoint: function () {
                     for (var i = 0; i < 3; i++) {
                         //ポリゴンDOMの生成
                         var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -108,7 +108,7 @@
                 },
 
                 //ポリゴン群構築
-                initPolygon: function () {
+                drawPolygon: function () {
                     var i, j;   //反復用
 
                     for (i = 0; i < this.Ni - 1; i++) {
