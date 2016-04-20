@@ -180,25 +180,16 @@
                 },
 
                 //ポリゴン群構築
-                drawPolygon: function (flgSkin) {
+                drawPolygon: function (mode) {
                     var i, j;   //反復用
 
                     for (i = 0; i < this.Ni - 1; i++) {
                         for (j = 0; j < this.Nj - 1; j++) {
                             //４頂点の設定
-                            if (flgSkin) {
-                                //肌座標
-                                var strVertexA = this.stringVertex(this.Vertex[i][j].Skin);
-                                var strVertexB = this.stringVertex(this.Vertex[i][j + 1].Skin);
-                                var strVertexC = this.stringVertex(this.Vertex[i + 1][j + 1].Skin);
-                                var strVertexD = this.stringVertex(this.Vertex[i + 1][j].Skin);
-                            } else {
-                                //変形後肘座標
-                                var strVertexA = this.stringVertex(this.Vertex[i][j].Elbow);
-                                var strVertexB = this.stringVertex(this.Vertex[i][j + 1].Elbow);
-                                var strVertexC = this.stringVertex(this.Vertex[i + 1][j + 1].Elbow);
-                                var strVertexD = this.stringVertex(this.Vertex[i + 1][j].Elbow);
-                            }
+                            var strVertexA = this.stringVertex(this.Vertex[i][j][mode]);
+                            var strVertexB = this.stringVertex(this.Vertex[i][j + 1][mode]);
+                            var strVertexC = this.stringVertex(this.Vertex[i + 1][j + 1][mode]);
+                            var strVertexD = this.stringVertex(this.Vertex[i + 1][j][mode]);
 
                             //ポリゴンDOMの生成
                             var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
@@ -230,42 +221,42 @@
             //------------------------------
             //座標
             //------------------------------
-            var X0 = 100, X1 = 300, X2 = 500;
+            var X0 = 100, X1 = 300, X2 = 600;
             var Y0 = 100, Y1 = 400;
  
             //------------------------------
             //変形前
             //------------------------------
             PolygonMesh.init(0, X0, Y0);
-            PolygonMesh.draw(true);
+            PolygonMesh.draw("Skin");
 
             //------------------------------
             //50
             //------------------------------
             PolygonMesh.init(50, X1, Y0);
-            PolygonMesh.draw(true);
+            PolygonMesh.draw("Skin");
 
             //上
             PolygonMesh.init(0, X1, Y1);
-            PolygonMesh.draw(false);
+            PolygonMesh.draw("Org");
 
             //下
             PolygonMesh.init(50, X1, Y1);
-            PolygonMesh.draw(false);
+            PolygonMesh.draw("Elbow");
 
             //------------------------------
             //100
             //------------------------------
             PolygonMesh.init(100, X2, Y0);
-            PolygonMesh.draw(true);
+            PolygonMesh.draw("Skin");
 
             //上
             PolygonMesh.init(0, X2, Y1);
-            PolygonMesh.draw(false);
+            PolygonMesh.draw("Org");
 
             //下
             PolygonMesh.init(100, X2, Y1);
-            PolygonMesh.draw(false);
+            PolygonMesh.draw("Elbow");
         });
     </script>
 </body>
