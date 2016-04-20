@@ -12,13 +12,13 @@
     <script type="text/javascript">
         $(function () {
             //SVGのDOMを生成
-            var svg = document.getElementById("svg");
+            var domSvg = document.getElementById("svg");
 
             //変数の宣言
             var i, j;   //反復用
             var Ni = 12, Nj = 6;    //最大値
-            var PolygonWidth = 30;
-            var PolygonHeight = 30;
+            var polygonWidth = 30;
+            var polygonHeight = 30;
 
             //頂点群構築
             var Vertex = [];
@@ -26,8 +26,8 @@
                 Vertex[i] = [];
                 for (j = 0; j < Nj; j++) {
                     Vertex[i][j] = {
-                        x: PolygonWidth * j,
-                        y: PolygonHeight * i
+                        x: polygonWidth * j,
+                        y: polygonHeight * i
                     };
                 }
             }
@@ -41,20 +41,19 @@
                     var vertexC = Vertex[i + 1][j + 1].x + "," + Vertex[i + 1][j + 1].y;
                     var vertexD = Vertex[i + 1][j].x + "," + Vertex[i + 1][j].y;
 
-
                     //ポリゴンDOMの生成
-                    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                    var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 
                     //頂点の設定
                     var strPolygonPoints = vertexA + " " + vertexB + " " + vertexC + " " + vertexD
-                    polygon.setAttribute("points", strPolygonPoints);
+                    domPolygon.setAttribute("points", strPolygonPoints);
 
                     //見た目の設定
                     var strPolygonStyle = "fill: lime; stroke: purple; stroke-width: 1";
-                    polygon.setAttribute("style", strPolygonStyle);
+                    domPolygon.setAttribute("style", strPolygonStyle);
 
                     //SVGタグに追加
-                    svg.appendChild(polygon);
+                    domSvg.appendChild(domPolygon);
                 }
             }
         });
