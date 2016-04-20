@@ -233,46 +233,53 @@
                     //骨描画
                     for (var i = 0; i < 2; i++) {
                         //ポリゴンDOMの生成
-                        var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        this.Joint[i].domBone = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
                         //寸法の設定
-                        domCircle.setAttribute("x1", this.Joint[i].x);
-                        domCircle.setAttribute("y1", this.Joint[i].y);
-                        domCircle.setAttribute("x2", this.Joint[i + 1].x);
-                        domCircle.setAttribute("y2", this.Joint[i + 1].y);
+                        this.Joint[i].domBone.setAttribute("x1", this.Joint[i].x);
+                        this.Joint[i].domBone.setAttribute("y1", this.Joint[i].y);
+                        this.Joint[i].domBone.setAttribute("x2", this.Joint[i + 1].x);
+                        this.Joint[i].domBone.setAttribute("y2", this.Joint[i + 1].y);
 
                         //外見の設定
                         var strCircleStyle = "stroke:green; stroke-width:5";
-                        domCircle.setAttribute("style", strCircleStyle);
+                        this.Joint[i].domBone.setAttribute("style", strCircleStyle);
 
                         //SVGタグに追加
-                        domSvg.appendChild(domCircle);
+                        domSvg.appendChild(this.Joint[i].domBone);
                     }
 
                     //関節描画
                     for (var i = 0; i < 3; i++) {
                         //ポリゴンDOMの生成
-                        this.Joint[i].domCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                        this.Joint[i].domJoint = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 
                         //寸法の設定
-                        this.Joint[i].domCircle.setAttribute("cx", this.Joint[i].x);
-                        this.Joint[i].domCircle.setAttribute("cy", this.Joint[i].y);
-                        this.Joint[i].domCircle.setAttribute("r", 10);
+                        this.Joint[i].domJoint.setAttribute("cx", this.Joint[i].x);
+                        this.Joint[i].domJoint.setAttribute("cy", this.Joint[i].y);
+                        this.Joint[i].domJoint.setAttribute("r", 10);
 
                         //外見の設定
-                        this.Joint[i].domCircle.setAttribute("stroke", "black");
-                        this.Joint[i].domCircle.setAttribute("fill", "lime");
-                        this.Joint[i].domCircle.setAttribute("stroke-width", "2");
+                        this.Joint[i].domJoint.setAttribute("stroke", "black");
+                        this.Joint[i].domJoint.setAttribute("fill", "lime");
+                        this.Joint[i].domJoint.setAttribute("stroke-width", "2");
 
                         //SVGタグに追加
-                        domSvg.appendChild(this.Joint[i].domCircle);
+                        domSvg.appendChild(this.Joint[i].domJoint);
                     }
                 },
 
-                //クリア
-                clear: function () {
-                    //SVGタグに追加
-                    domSvg.removeChild(this.Joint[0].domCircle);
+                //関節削除
+                clearJoint: function () {
+                    //骨削除
+                    for (var i = 0; i < 2; i++) {
+                        domSvg.removeChild(this.Joint[i].domBone);
+                    }
+
+                    //関節削除
+                    for (var i = 0; i < 3; i++) {
+                        domSvg.removeChild(this.Joint[i].domJoint);
+                    }
                 },
 
                 //頂点座標を文字列化
@@ -293,14 +300,18 @@
             //------------------------------
             //初期ポリゴン
             //------------------------------
+
+            //変形前
             var Polygon0 = new PolygonMesh(0, X0, Y0);
             Polygon0.drawPolygon("Skin", skinColor);
             Polygon0.drawJoint();
 
+            //変形後メイン
             var PolygonMain = new PolygonMesh(30, X1, Y0);
             PolygonMain.drawPolygon("Skin", skinColor);
             PolygonMain.drawJoint();
 
+            //変形後サブ
             var PolygonSub = new PolygonMesh(30, X1, Y1);
             PolygonSub.drawPolygon("Org", shoulderColor);
             PolygonSub.drawPolygon("Elbow", elbowColor);
@@ -318,9 +329,15 @@
                     return false;
                 }
 
-                PolygonMain.clear();
+                //------------------------------
+                //クリア
+                //------------------------------
 
-                PolygonSub.clear();
+                //変形後メイン
+                PolygonMain.clearJoint();
+
+                //変形後サブ
+                PolygonSub.clearJoint();
             });
 
             
