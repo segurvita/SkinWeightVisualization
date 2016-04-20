@@ -215,7 +215,36 @@
                 //頂点座標を文字列化
                 stringVertex: function (vertex2d) {
                     return vertex2d.x + "," + vertex2d.y;
-                }
+                },
+
+                //ポリゴン群構築
+                drawLine: function () {
+                    var i, j;   //反復用
+
+                    for (i = 0; i < this.Ni; i++) {
+                        for (j = 0; j < this.Nj; j++) {
+                            //ポリゴンDOMの生成
+                            var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+                            //寸法の設定
+                            domCircle.setAttribute("x1", this.Vertex[i][j].Org.x);
+                            domCircle.setAttribute("y1", this.Vertex[i][j].Org.y);
+                            domCircle.setAttribute("x2", this.Vertex[i][j].Elbow.x);
+                            domCircle.setAttribute("y2", this.Vertex[i][j].Elbow.y);
+
+                            //外見の設定
+                            var strColorR = Math.round((i / this.Ni) * 255);
+                            var strColorG = 155;
+                            var strColorB = 255 - Math.round((j / this.Nj) * 255);
+                            var strColor = "rgb(" + strColorR + "," + strColorG + "," + strColorB + ")";
+                            var strCircleStyle = "stroke:" + strColor + "; stroke-width:1";
+                            domCircle.setAttribute("style", strCircleStyle);
+
+                            //SVGタグに追加
+                            domSvg.appendChild(domCircle);
+                        }
+                    }
+                },
             };
 
             //------------------------------
@@ -243,6 +272,7 @@
             PolygonMesh.init(50, X1, Y1);
             PolygonMesh.draw("Org", shoulderColor);
             PolygonMesh.draw("Elbow", elbowColor);
+            PolygonMesh.drawLine();
 
             //------------------------------
             //100
@@ -254,6 +284,7 @@
             PolygonMesh.init(100, X2, Y1);
             PolygonMesh.draw("Org", shoulderColor);
             PolygonMesh.draw("Elbow", elbowColor);
+            PolygonMesh.drawLine();
         });
     </script>
 </body>
