@@ -16,10 +16,10 @@
 
             var PolygonMesh = {
                 _arg: 0,   //角度
-                Ni: 3,    //最大値
-                Nj: 2,     //最大値
-                Fw: 60, //面の幅
-                Fh: 70, //面の高さ
+                Ni: 9,    //最大値
+                Nj: 5,     //最大値
+                Fw: 30, //面の幅
+                Fh: 30, //面の高さ
                 _Mx: 0,    //余白
                 _My: 0,    //余白
                 Vertex: [], //頂点群
@@ -115,14 +115,25 @@
                 initVertex: function () {
                     var i, j;   //反復用
 
+                    //骨の長さ
+                    var boneLength = (this.Joint[1].y - this.Joint[0].y) * 2;
+
+                    //頂点群構築
                     this.Vertex = [];
                     for (i = 0; i < this.Ni; i++) {
+                        //y座標の初期値
+                        var OrgY = this._My + this.Fh * i;
+
+                        //スキンウェイト
+                        var sw = 1 - (OrgY - this.Joint[0].y) / boneLength;
+
                         this.Vertex[i] = [];
                         for (j = 0; j < this.Nj; j++) {
+                            //初期化
                             this.Vertex[i][j] = {
                                 Org: {
                                     x: this._Mx + this.Fw * j, //x座標の初期値
-                                    y: this._My + this.Fh * i, //y座標の初期値
+                                    y: OrgY, //y座標の初期値
                                 },
                                 Elbow: {
                                     x: 0,
@@ -132,7 +143,7 @@
                                     x: 0,
                                     y: 0
                                 },
-                                s: (1.0 - i / (this.Ni - 1)),  //スキンウェイト
+                                s: sw
                             };
                         }
                     }
