@@ -101,8 +101,19 @@
 
                     for (i = 0; i < this.Ni; i++) {
                         for (j = 0; j < this.Nj; j++) {
-                            this.Vertex[i][j].x = this.Vertex[i][j].orgX;
-                            this.Vertex[i][j].y = this.Vertex[i][j].orgY;
+                            //肩座標系
+                            var Sx = this.Vertex[i][j].orgX - this.Joint[0].x + this.Joint[0].x;
+                            var Sy = this.Vertex[i][j].orgY - this.Joint[0].y + this.Joint[0].y;
+                            var Ss = this.Vertex[i][j].s;
+
+                            //肘座標系
+                            var Ex = this.Vertex[i][j].orgX - this.Joint[1].x + this.Joint[1].x;
+                            var Ey = this.Vertex[i][j].orgY - this.Joint[1].y + this.Joint[1].y;
+                            var Es = 1 - this.Vertex[i][j].s;
+
+                            //重み付け
+                            this.Vertex[i][j].x = Sx * Ss + Ex * Es;
+                            this.Vertex[i][j].y = Sy * Ss + Ey * Es;
                         }
                     }
                 },
