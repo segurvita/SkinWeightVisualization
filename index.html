@@ -27,6 +27,7 @@
                 init: function () {
                     this.initJoint();
                     this.initVertex();
+                    this.applySkinWeight();
                     this.initPolygon();
                     this.redrawJoint();
                 },
@@ -84,10 +85,24 @@
                         this.Vertex[i] = [];
                         for (j = 0; j < this.Nj; j++) {
                             this.Vertex[i][j] = {
-                                x: this.Margin + this.Fw * j, //x座標
-                                y: this.Margin + this.Fh * i, //y座標
-                                s: (1.0 - Math.round(i / this.Ni))  //スキンウェイト
+                                x: 0, //x座標
+                                y: 0, //y座標
+                                orgX: this.Margin + this.Fw * j, //x座標の初期値
+                                orgY: this.Margin + this.Fh * i, //y座標の初期値
+                                s: (1.0 - Math.round(i / this.Ni)),  //スキンウェイト
                             };
+                        }
+                    }
+                },
+
+                //スキンウェイトを反映
+                applySkinWeight: function(){
+                    var i, j;   //反復用
+
+                    for (i = 0; i < this.Ni; i++) {
+                        for (j = 0; j < this.Nj; j++) {
+                            this.Vertex[i][j].x = this.Vertex[i][j].orgX;
+                            this.Vertex[i][j].y = this.Vertex[i][j].orgY;
                         }
                     }
                 },
