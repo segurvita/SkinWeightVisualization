@@ -278,7 +278,7 @@
             //------------------------------
             //座標
             //------------------------------
-            var X0 = 100, X1 = 300, X2 = 600;
+            var X0 = 100, X1 = 400, X2 = 600;
             var Y0 = 100, Y1 = 400;
             var skinColor = { r: 252, g: 226, b: 196 };
             var shoulderColor = { r: 196, g: 252, b: 226 };
@@ -292,32 +292,28 @@
             Polygon0.drawJoint();
 
             //------------------------------
-            //50
+            //角度変更
             //------------------------------
-            var Polygon50 = new PolygonMesh(50, X1, Y0);
-            Polygon50.drawPolygon("Skin", skinColor);
-            Polygon50.drawJoint();
+            $("#inputAng").change(function () {
+                //入力取得
+                var newAng = $(this).val();
+                if (!isFinite(newAng)) {
+                    return false;
+                }
 
-            var Polygon50s = new PolygonMesh(50, X1, Y1);
-            Polygon50s.drawPolygon("Org", shoulderColor);
-            Polygon50s.drawPolygon("Elbow", elbowColor);
-            Polygon50s.drawLine();
-            Polygon50s.drawPolygon("Skin", skinColor);
-            Polygon50s.drawJoint();
+                var PolygonNew = new PolygonMesh(newAng, X1, Y0);
+                PolygonNew.drawPolygon("Skin", skinColor);
+                PolygonNew.drawJoint();
 
-            //------------------------------
-            //100
-            //------------------------------
-            var Polygon100 = new PolygonMesh(100, X2, Y0);
-            Polygon100.drawPolygon("Skin", skinColor);
-            Polygon100.drawJoint();
+                var PolygonNewS = new PolygonMesh(newAng, X1, Y1);
+                PolygonNewS.drawPolygon("Org", shoulderColor);
+                PolygonNewS.drawPolygon("Elbow", elbowColor);
+                PolygonNewS.drawLine();
+                PolygonNewS.drawPolygon("Skin", skinColor);
+                PolygonNewS.drawJoint();
+            });
 
-            var Polygon100s = new PolygonMesh(100, X2, Y1);
-            Polygon100s.drawPolygon("Org", shoulderColor);
-            Polygon100s.drawPolygon("Elbow", elbowColor);
-            Polygon100s.drawLine();
-            Polygon100s.drawPolygon("Skin", skinColor);
-            Polygon100s.drawJoint();
+            
         });
     </script>
 </body>
