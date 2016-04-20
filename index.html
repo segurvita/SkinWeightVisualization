@@ -12,30 +12,38 @@
     </div>
     <script type="text/javascript">
         $(function () {
-            //SVG‚ÌDOMæ“¾
+            //SVGã®DOMã‚’ç”Ÿæˆ
             var svg = document.getElementById("svg");
 
-            //•Ï”éŒ¾
+            //å¤‰æ•°ã®å®£è¨€
             var i, j;
-            var Ni = 6, Nj = 12;
+            var Ni = 12, Nj = 6;
 
-            //’¸“_ŒQ‰Šú‰»
+            //é ‚ç‚¹ç¾¤æ§‹ç¯‰
             var Vertex = [];
             for (i = 0; i < Ni; i++) {
                 Vertex[i] = [];
                 for (j = 0; j < Nj; j++) {
                     Vertex[j] = {
-                        x: 10 * i,
-                        y: 10 * j
+                        x: 10 * j,
+                        y: 10 * i
                     };
                 }
             }
 
-            //ƒ|ƒŠƒSƒ“\’z
-            var strPolygonPoints = "0,0 10,0 10,10 0,10"
-            var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-            polygon.setAttribute("points", strPolygonPoints);
-            svg.appendChild(polygon);
+            //ãƒãƒªã‚´ãƒ³ç¾¤æ§‹ç¯‰
+            for (i = 0; i < Ni-1; i++) {
+                for (j = 0; j < Nj - 1; j++) {
+                    var vertexA = Vertex[i][j].x + "," + Vertex[i][j].y;
+                    var vertexB = Vertex[i][j+1].x + "," + Vertex[i][j+1].y;
+                    var vertexC = Vertex[i+1][j+1].x + "," + Vertex[i+1][j+1].y;
+                    var vertexD = Vertex[i+1][j].x + "," + Vertex[i+1][j].y;
+                    var strPolygonPoints = vertexA + " " + vertexB + " " + vertexC + " " + vertexD
+                    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                    polygon.setAttribute("points", strPolygonPoints);
+                    svg.appendChild(polygon);
+                }
+            }
         });
     </script>
 </body>
