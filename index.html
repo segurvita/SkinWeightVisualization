@@ -133,18 +133,25 @@
                     for (i = 0; i < this.Ni; i++) {
                         for (j = 0; j < this.Nj; j++) {
                             //肩座標系
-                            var Sx = this.Vertex[i][j].orgX - this.Joint[0].x + this.Joint[0].x;
-                            var Sy = this.Vertex[i][j].orgY - this.Joint[0].y + this.Joint[0].y;
+                            var Sx = this.Vertex[i][j].orgX;
+                            var Sy = this.Vertex[i][j].orgY;
                             var Ss = this.Vertex[i][j].s;
 
                             //肘座標系
-                            var Ex = (this.Vertex[i][j].orgX - this.Joint[1].x) * Math.cos(this._arg) + this.Joint[1].x;
-                            var Ey = (this.Vertex[i][j].orgY - this.Joint[1].y) * Math.cos(this._arg) + this.Joint[1].y;
+                            var Dx = (this.Vertex[i][j].orgX - this.Joint[1].x);
+                            var Dy = (this.Vertex[i][j].orgY - this.Joint[1].y);
+                            var Cos = Math.cos(this._arg);
+                            var Sin = Math.sin(this._arg);
+                            var Ex = Dx * Cos + Dy * Sin + this.Joint[1].x;
+                            var Ey = -Dx * Sin + Dy * Cos + this.Joint[1].y;
                             var Es = 1 - this.Vertex[i][j].s;
 
                             //重み付け
                             this.Vertex[i][j].x = Sx * Ss + Ex * Es;
                             this.Vertex[i][j].y = Sy * Ss + Ey * Es;
+
+                            //this.Vertex[i][j].x = Ex;
+                            //this.Vertex[i][j].y = Ey;
                         }
                     }
                 },
