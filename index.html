@@ -14,27 +14,25 @@
             //SVGのDOMを生成
             var domSvg = document.getElementById("svg");
 
-            var PolygonMesh = {
-                _arg: 0,   //角度
-                Ni: 9,    //最大値
-                Nj: 5,     //最大値
-                Fw: 30, //面の幅
-                Fh: 30, //面の高さ
-                _Mx: 0,    //余白
-                _My: 0,    //余白
+            //------------------------------
+            //PolygonMesh雛形オブジェクト
+            //------------------------------
+            var pPolygonMesh = {
+                //固定値
+                Ni: 9,      //最大値
+                Nj: 5,      //最大値
+                Fw: 30,     //面の幅
+                Fh: 30,     //面の高さ
+
+                //メンバ変数
+                _arg: 0,    //角度
+                _Mx: 0,     //余白
+                _My: 0,     //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
 
                 //初期化
                 init: function (numArg, numMarginX, numMarginY) {
-                    if (numArg === null || numArg === void 0) {
-                        this._arg = 0;
-                    } else {
-                        this._arg = numArg * (Math.PI / 180);
-                    }
-                    this._Mx = numMarginX;
-                    this._My = numMarginY;
-
                     this.initJoint();
                     this.initVertex();
                     this.applySkinWeight();
@@ -259,6 +257,20 @@
             };
 
             //------------------------------
+            //PolygonMeshクラス
+            //------------------------------
+            var PolygonMesh = function (numArg, numMarginX, numMarginY) {
+                if (numArg === null || numArg === void 0) {
+                    this._arg = 0;
+                } else {
+                    this._arg = numArg * (Math.PI / 180);
+                }
+                this._Mx = numMarginX;
+                this._My = numMarginY;
+            };
+            PolygonMesh.prototype = pPolygonMesh;
+
+            //------------------------------
             //座標
             //------------------------------
             var X0 = 100, X1 = 300, X2 = 600;
@@ -270,34 +282,37 @@
             //------------------------------
             //変形前
             //------------------------------
-            PolygonMesh.init(0, X0, Y0);
-            PolygonMesh.draw("Skin", skinColor);
+            var Polygon0 = new PolygonMesh(0, X0, Y0);
+            Polygon0.init();
+            Polygon0.draw("Skin", skinColor);
 
             //------------------------------
             //50
             //------------------------------
-            PolygonMesh.init(50, X1, Y0);
-            PolygonMesh.draw("Skin", skinColor);
+            var Polygon50 = new PolygonMesh(50, X1, Y0);
+            Polygon50.init();
+            Polygon50.draw("Skin", skinColor);
 
-            //上
-            PolygonMesh.init(50, X1, Y1);
-            PolygonMesh.draw("Org", shoulderColor);
-            PolygonMesh.draw("Elbow", elbowColor);
-            PolygonMesh.drawLine();
-            PolygonMesh.draw("Skin", skinColor);
+            var Polygon50s = new PolygonMesh(50, X1, Y1);
+            Polygon50s.init();
+            Polygon50s.draw("Org", shoulderColor);
+            Polygon50s.draw("Elbow", elbowColor);
+            Polygon50s.drawLine();
+            Polygon50s.draw("Skin", skinColor);
 
             //------------------------------
             //100
             //------------------------------
-            PolygonMesh.init(100, X2, Y0);
-            PolygonMesh.draw("Skin", skinColor);
+            var Polygon100 = new PolygonMesh(100, X2, Y0);
+            Polygon100.init();
+            Polygon100.draw("Skin", skinColor);
 
-            //上
-            PolygonMesh.init(100, X2, Y1);
-            PolygonMesh.draw("Org", shoulderColor);
-            PolygonMesh.draw("Elbow", elbowColor);
-            PolygonMesh.drawLine();
-            PolygonMesh.draw("Skin", skinColor);
+            var Polygon100s = new PolygonMesh(100, X2, Y1);
+            Polygon100s.init();
+            Polygon100s.draw("Org", shoulderColor);
+            Polygon100s.draw("Elbow", elbowColor);
+            Polygon100s.drawLine();
+            Polygon100s.draw("Skin", skinColor);
         });
     </script>
 </body>
