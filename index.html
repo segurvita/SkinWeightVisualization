@@ -68,6 +68,26 @@
 
                 //関節群描画
                 drawJoint: function () {
+                    //骨描画
+                    for (var i = 0; i < 2; i++) {
+                        //ポリゴンDOMの生成
+                        var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+                        //寸法の設定
+                        domCircle.setAttribute("x1", this.Joint[i].x);
+                        domCircle.setAttribute("y1", this.Joint[i].y);
+                        domCircle.setAttribute("x2", this.Joint[i + 1].x);
+                        domCircle.setAttribute("y2", this.Joint[i + 1].y);
+
+                        //外見の設定
+                        var strCircleStyle = "stroke:green; stroke-width:5";
+                        domCircle.setAttribute("style", strCircleStyle);
+
+                        //SVGタグに追加
+                        domSvg.appendChild(domCircle);
+                    }
+
+                    //関節描画
                     for (var i = 0; i < 3; i++) {
                         //ポリゴンDOMの生成
                         var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
