@@ -14,52 +14,71 @@
             //SVGのDOMを生成
             var domSvg = document.getElementById("svg");
 
-            //変数の宣言
-            var i, j;   //反復用
-            var Ni = 10, Nj = 5;    //最大値
-            var polygonWidth = 30;
-            var polygonHeight = 30;
+            var PolygonMesh = {
+                Ni: 10,    //最大値
+                Nj: 5,     //最大値
+                Fw: 30,
+                Fh: 30,
+                Vertex: [],
 
-            //頂点群構築
-            var Vertex = [];
-            for (i = 0; i < Ni; i++) {
-                Vertex[i] = [];
-                for (j = 0; j < Nj; j++) {
-                    Vertex[i][j] = {
-                        x: polygonWidth * j,
-                        y: polygonHeight * i
-                    };
+                //初期化
+                init: function () {
+                    this.initVertex();
+                    this.initPolygon();
+                },
+
+                //頂点群構築
+                initVertex: function () {
+                    var i, j;   //反復用
+
+                    this.Vertex = [];
+                    for (i = 0; i < this.Ni; i++) {
+                        this.Vertex[i] = [];
+                        for (j = 0; j < this.Nj; j++) {
+                            this.Vertex[i][j] = {
+                                x: this.Fw * j,
+                                y: this.Fh * i
+                            };
+                        }
+                    }
+                },
+
+                //ポリゴン群構築
+                initPolygon: function () {
+                    var i, j;   //反復用
+
+                    for (i = 0; i < this.Ni - 1; i++) {
+                        for (j = 0; j < this.Nj - 1; j++) {
+                            //４頂点の設定
+                            var strVertexA = this.Vertex[i][j].x + "," + this.Vertex[i][j].y;
+                            var strVertexB = this.Vertex[i][j + 1].x + "," + this.Vertex[i][j + 1].y;
+                            var strVertexC = this.Vertex[i + 1][j + 1].x + "," + this.Vertex[i + 1][j + 1].y;
+                            var strVertexD = this.Vertex[i + 1][j].x + "," + this.Vertex[i + 1][j].y;
+
+                            //ポリゴンDOMの生成
+                            var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+
+                            //頂点の設定
+                            var strPolygonPoints = strVertexA + " " + strVertexB + " " + strVertexC + " " + strVertexD;
+                            domPolygon.setAttribute("points", strPolygonPoints);
+
+                            //見た目の設定
+                            var strPolygonColorR = Math.round(i * 255 / this.Ni);
+                            var strPolygonColorG = Math.round(j * 255 / this.Nj);
+                            var strPolygonColorB = 200 - Math.round((i + j) * 200 / (this.Ni + this.Nj));
+                            var strPolygonColor = "rgb(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ")";
+                            var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
+                            domPolygon.setAttribute("style", strPolygonStyle);
+
+                            //SVGタグに追加
+                            domSvg.appendChild(domPolygon);
+                        }
+                    }
                 }
-            }
+            };
 
-            //ポリゴン群構築
-            for (i = 0; i < Ni - 1; i++) {
-                for (j = 0; j < Nj - 1; j++) {
-                    //４頂点の設定
-                    var vertexA = Vertex[i][j].x + "," + Vertex[i][j].y;
-                    var vertexB = Vertex[i][j + 1].x + "," + Vertex[i][j + 1].y;
-                    var vertexC = Vertex[i + 1][j + 1].x + "," + Vertex[i + 1][j + 1].y;
-                    var vertexD = Vertex[i + 1][j].x + "," + Vertex[i + 1][j].y;
-
-                    //ポリゴンDOMの生成
-                    var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-
-                    //頂点の設定
-                    var strPolygonPoints = vertexA + " " + vertexB + " " + vertexC + " " + vertexD
-                    domPolygon.setAttribute("points", strPolygonPoints);
-
-                    //見た目の設定
-                    var strPolygonColorR = Math.round(i * 255 / Ni);
-                    var strPolygonColorG = Math.round(j * 255 / Nj);
-                    var strPolygonColorB = 200 - Math.round((i + j) * 200 / (Ni + Nj));
-                    var strPolygonColor = "rgb(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ")";
-                    var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
-                    domPolygon.setAttribute("style", strPolygonStyle);
-
-                    //SVGタグに追加
-                    domSvg.appendChild(domPolygon);
-                }
-            }
+            //初期化
+            PolygonMesh.init();
         });
     </script>
 </body>
