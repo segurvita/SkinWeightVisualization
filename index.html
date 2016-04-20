@@ -15,9 +15,28 @@
             var domSvg = document.getElementById("svg");
 
             //------------------------------
-            //PolygonMesh雛形オブジェクト
+            //PolygonMeshクラス
             //------------------------------
-            var pPolygonMesh = {
+
+            //コンストラクタ
+            var PolygonMesh = function (numArg, numMarginX, numMarginY) {
+                if (isFinite(numArg)) {
+                    this._arg = numArg * (Math.PI / 180);
+                } else {
+                    this._arg = 0;
+                }
+
+                if (isFinite(numMarginX)) {
+                    this._Mx = numMarginX;
+                }
+
+                if (isFinite(numMarginY)) {
+                    this._My = numMarginY;
+                }
+            };
+
+            //プロトタイプオブジェクト
+            PolygonMesh.prototype = {
                 //固定値
                 Ni: 9,      //最大値
                 Nj: 5,      //最大値
@@ -255,20 +274,6 @@
                     }
                 },
             };
-
-            //------------------------------
-            //PolygonMeshクラス
-            //------------------------------
-            var PolygonMesh = function (numArg, numMarginX, numMarginY) {
-                if (numArg === null || numArg === void 0) {
-                    this._arg = 0;
-                } else {
-                    this._arg = numArg * (Math.PI / 180);
-                }
-                this._Mx = numMarginX;
-                this._My = numMarginY;
-            };
-            PolygonMesh.prototype = pPolygonMesh;
 
             //------------------------------
             //座標
