@@ -20,6 +20,7 @@
 
             //コンストラクタ
             var PolygonMesh = function (numArg, numMarginX, numMarginY) {
+                //引数検査
                 if (isFinite(numArg)) {
                     this._arg = numArg * (Math.PI / 180);
                 } else {
@@ -33,6 +34,15 @@
                 if (isFinite(numMarginY)) {
                     this._My = numMarginY;
                 }
+
+                //関節初期化
+                this.initJoint();
+
+                //頂点群初期化
+                this.initVertex();
+
+                //スキンウェイト初期化
+                this.applySkinWeight();
             };
 
             //プロトタイプオブジェクト
@@ -49,13 +59,6 @@
                 _My: 0,     //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
-
-                //初期化
-                init: function (numArg, numMarginX, numMarginY) {
-                    this.initJoint();
-                    this.initVertex();
-                    this.applySkinWeight();
-                },
 
                 //描画
                 draw: function (flgSkin, color) {
@@ -288,18 +291,15 @@
             //変形前
             //------------------------------
             var Polygon0 = new PolygonMesh(0, X0, Y0);
-            Polygon0.init();
             Polygon0.draw("Skin", skinColor);
 
             //------------------------------
             //50
             //------------------------------
             var Polygon50 = new PolygonMesh(50, X1, Y0);
-            Polygon50.init();
             Polygon50.draw("Skin", skinColor);
 
             var Polygon50s = new PolygonMesh(50, X1, Y1);
-            Polygon50s.init();
             Polygon50s.draw("Org", shoulderColor);
             Polygon50s.draw("Elbow", elbowColor);
             Polygon50s.drawLine();
@@ -309,11 +309,9 @@
             //100
             //------------------------------
             var Polygon100 = new PolygonMesh(100, X2, Y0);
-            Polygon100.init();
             Polygon100.draw("Skin", skinColor);
 
             var Polygon100s = new PolygonMesh(100, X2, Y1);
-            Polygon100s.init();
             Polygon100s.draw("Org", shoulderColor);
             Polygon100s.draw("Elbow", elbowColor);
             Polygon100s.drawLine();
