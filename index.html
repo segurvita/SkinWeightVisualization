@@ -6,14 +6,36 @@
 </head>
 <body>
     <div>
-        <svg width="500" height="500">
+        <svg id="svg" width="500" height="500">
             <polygon id='poly1' points="220,10 300,210 170,250 123,234" style="fill: lime; stroke: purple; stroke-width: 1" />
         </svg>
     </div>
     <script type="text/javascript">
-        $(function(){
-            var polygon = document.getElementById('poly1');
-            polygon.setAttribute("points", "0,0 10,0 10,10 0,10");
+        $(function () {
+            //SVG‚ÌDOMæ“¾
+            var svg = document.getElementById("svg");
+
+            //•Ï”éŒ¾
+            var i, j;
+            var Ni = 6, Nj = 12;
+
+            //’¸“_ŒQ‰Šú‰»
+            var Vertex = [];
+            for (i = 0; i < Ni; i++) {
+                Vertex[i] = [];
+                for (j = 0; j < Nj; j++) {
+                    Vertex[j] = {
+                        x: 10 * i,
+                        y: 10 * j
+                    };
+                }
+            }
+
+            //ƒ|ƒŠƒSƒ“\’z
+            var strPolygonPoints = "0,0 10,0 10,10 0,10"
+            var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+            polygon.setAttribute("points", strPolygonPoints);
+            svg.appendChild(polygon);
         });
     </script>
 </body>
