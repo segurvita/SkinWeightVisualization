@@ -33,14 +33,14 @@
             }
 
             //ポリゴン群構築
-            for (i = 0; i < Ni-1; i++) {
+            for (i = 0; i < Ni - 1; i++) {
                 for (j = 0; j < Nj - 1; j++) {
                     //４頂点の設定
                     var vertexA = Vertex[i][j].x + "," + Vertex[i][j].y;
-                    var vertexB = Vertex[i][j+1].x + "," + Vertex[i][j+1].y;
-                    var vertexC = Vertex[i+1][j+1].x + "," + Vertex[i+1][j+1].y;
+                    var vertexB = Vertex[i][j + 1].x + "," + Vertex[i][j + 1].y;
+                    var vertexC = Vertex[i + 1][j + 1].x + "," + Vertex[i + 1][j + 1].y;
                     var vertexD = Vertex[i + 1][j].x + "," + Vertex[i + 1][j].y;
-                    
+
 
                     //ポリゴンDOMの生成
                     var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
