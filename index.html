@@ -7,7 +7,6 @@
 <body>
     <div>
         <svg id="svg" width="500" height="500">
-            <polygon id='poly1' points="220,10 300,210 170,250 123,234" style="fill: lime; stroke: purple; stroke-width: 1" />
         </svg>
     </div>
     <script type="text/javascript">
@@ -16,17 +15,19 @@
             var svg = document.getElementById("svg");
 
             //変数の宣言
-            var i, j;
-            var Ni = 12, Nj = 6;
+            var i, j;   //反復用
+            var Ni = 12, Nj = 6;    //最大値
+            var PolygonWidth = 30;
+            var PolygonHeight = 30;
 
             //頂点群構築
             var Vertex = [];
             for (i = 0; i < Ni; i++) {
                 Vertex[i] = [];
                 for (j = 0; j < Nj; j++) {
-                    Vertex[j] = {
-                        x: 10 * j,
-                        y: 10 * i
+                    Vertex[i][j] = {
+                        x: PolygonWidth * j,
+                        y: PolygonHeight * i
                     };
                 }
             }
@@ -34,13 +35,25 @@
             //ポリゴン群構築
             for (i = 0; i < Ni-1; i++) {
                 for (j = 0; j < Nj - 1; j++) {
+                    //４頂点の設定
                     var vertexA = Vertex[i][j].x + "," + Vertex[i][j].y;
                     var vertexB = Vertex[i][j+1].x + "," + Vertex[i][j+1].y;
                     var vertexC = Vertex[i+1][j+1].x + "," + Vertex[i+1][j+1].y;
-                    var vertexD = Vertex[i+1][j].x + "," + Vertex[i+1][j].y;
-                    var strPolygonPoints = vertexA + " " + vertexB + " " + vertexC + " " + vertexD
+                    var vertexD = Vertex[i + 1][j].x + "," + Vertex[i + 1][j].y;
+                    
+
+                    //ポリゴンDOMの生成
                     var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+
+                    //頂点の設定
+                    var strPolygonPoints = vertexA + " " + vertexB + " " + vertexC + " " + vertexD
                     polygon.setAttribute("points", strPolygonPoints);
+
+                    //見た目の設定
+                    var strPolygonStyle = "fill: lime; stroke: purple; stroke-width: 1";
+                    polygon.setAttribute("style", strPolygonStyle);
+
+                    //SVGタグに追加
                     svg.appendChild(polygon);
                 }
             }
