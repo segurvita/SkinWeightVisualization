@@ -7,24 +7,13 @@
 <body>
     <div>
         <svg width="500" height="500">
-            <polygon id="abc" points="220,10 300,210 170,250 123,234" style="fill: lime; stroke: purple; stroke-width: 1" />
-            <path id="circle_path"
-                fill="#88BB33" d="M124,89c0,27-22,49-49,49s-49-22-49-49S47,40,75,40.6S124,62,124,89z">
-                <animate attributeName="d"
-                    values="M124,89c0,27-22,49-49,49s-49-22-49-49S47,40,75,40.6S124,62,124,89z;M154,89c0,27-52,49-79,49s-49-22-49-49S47,40,75,40.6S154,62,154,89z"
-                    dur="1.2s"
-                    repeatCount="1"
-                    begin="indefinite"
-                    id="circle_animate">
-                </animate>
-            </path>
+            <polygon id='poly1' points="220,10 300,210 170,250 123,234" style="fill: lime; stroke: purple; stroke-width: 1" />
         </svg>
     </div>
     <script type="text/javascript">
         $(function(){
-            //ÉAÉjÉÅÇìÆçÏÇ≥ÇπÇÈ
-            var animate = document.getElementById('circle_animate');
-            animate.beginElement();
+            var polygon = document.getElementById('poly1');
+            polygon.setAttribute("points", "0,0 10,0 10,10 0,10");
         });
     </script>
 </body>
