@@ -116,10 +116,18 @@
                         this.Vertex[i] = [];
                         for (j = 0; j < this.Nj; j++) {
                             this.Vertex[i][j] = {
-                                x: 0, //x座標
-                                y: 0, //y座標
-                                orgX: this._Mx + this.Fw * j, //x座標の初期値
-                                orgY: this._My + this.Fh * i, //y座標の初期値
+                                Org: {
+                                    x: this._Mx + this.Fw * j, //x座標の初期値
+                                    y: this._My + this.Fh * i, //y座標の初期値
+                                },
+                                Elbow: {
+                                    x: 0,
+                                    y: 0
+                                },
+                                Skin: {
+                                    x: 0,
+                                    y: 0
+                                },
                                 s: (1.0 - i / this.Ni),  //スキンウェイト
                             };
                         }
@@ -133,25 +141,36 @@
                     for (i = 0; i < this.Ni; i++) {
                         for (j = 0; j < this.Nj; j++) {
                             //肩座標系
-                            var Sx = this.Vertex[i][j].orgX;
-                            var Sy = this.Vertex[i][j].orgY;
-                            var Ss = this.Vertex[i][j].s;
+                            var S = {
+                                x: this.Vertex[i][j].Org.x,
+                                y: this.Vertex[i][j].Org.y,
+                                s: this.Vertex[i][j].s
+                            };
 
-                            //肘座標系
-                            var Dx = (this.Vertex[i][j].orgX - this.Joint[1].x);
-                            var Dy = (this.Vertex[i][j].orgY - this.Joint[1].y);
+                            //変形前肘座標系
+                            var D = {
+                                x: this.Vertex[i][j].Org.x - this.Joint[1].x,
+                                y: this.Vertex[i][j].Org.y - this.Joint[1].y
+                            };
+
+                            //角度
                             var Cos = Math.cos(this._arg);
                             var Sin = Math.sin(this._arg);
-                            var Ex = Dx * Cos + Dy * Sin + this.Joint[1].x;
-                            var Ey = -Dx * Sin + Dy * Cos + this.Joint[1].y;
-                            var Es = 1 - this.Vertex[i][j].s;
 
-                            //重み付け
-                            this.Vertex[i][j].x = Sx * Ss + Ex * Es;
-                            this.Vertex[i][j].y = Sy * Ss + Ey * Es;
+                            //変形後肘座標系
+                            var E = {
+                                x: D.x * Cos + D.y * Sin + this.Joint[1].x,
+                                y: -D.x * Sin + D.y * Cos + this.Joint[1].y,
+                                s: 1 - this.Vertex[i][j].s
+                            };
 
-                            //this.Vertex[i][j].x = Ex;
-                            //this.Vertex[i][j].y = Ey;
+                            //肘座標保存
+                            this.Vertex[i][j].Elbow.x = E.x;
+                            this.Vertex[i][j].Elbow.y = E.y;
+
+                            //スキン計算
+                            this.Vertex[i][j].Skin.x = S.x * S.s + E.x * E.s;
+                            this.Vertex[i][j].Skin.y = S.y * S.s + E.y * E.s;
                         }
                     }
                 },
@@ -163,10 +182,10 @@
                     for (i = 0; i < this.Ni - 1; i++) {
                         for (j = 0; j < this.Nj - 1; j++) {
                             //４頂点の設定
-                            var strVertexA = this.Vertex[i][j].x + "," + this.Vertex[i][j].y;
-                            var strVertexB = this.Vertex[i][j + 1].x + "," + this.Vertex[i][j + 1].y;
-                            var strVertexC = this.Vertex[i + 1][j + 1].x + "," + this.Vertex[i + 1][j + 1].y;
-                            var strVertexD = this.Vertex[i + 1][j].x + "," + this.Vertex[i + 1][j].y;
+                            var strVertexA = this.Vertex[i][j].Skin.x + "," + this.Vertex[i][j].Skin.y;
+                            var strVertexB = this.Vertex[i][j + 1].Skin.x + "," + this.Vertex[i][j + 1].Skin.y;
+                            var strVertexC = this.Vertex[i + 1][j + 1].Skin.x + "," + this.Vertex[i + 1][j + 1].Skin.y;
+                            var strVertexD = this.Vertex[i + 1][j].Skin.x + "," + this.Vertex[i + 1][j].Skin.y;
 
                             //ポリゴンDOMの生成
                             var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
