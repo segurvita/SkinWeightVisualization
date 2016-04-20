@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <svg id="svg" width="1000" height="500">
+        <svg id="svg" width="1000" height="1000">
         </svg>
     </div>
     <script type="text/javascript">
@@ -20,8 +20,8 @@
                 Nj: 5,     //最大値
                 Fw: 30, //面の幅
                 Fh: 30, //面の高さ
-                _Mx: 100,    //余白
-                _My: 100,    //余白
+                _Mx: 0,    //余白
+                _My: 0,    //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
 
@@ -38,7 +38,11 @@
                     this.initJoint();
                     this.initVertex();
                     this.applySkinWeight();
-                    this.drawPolygon();
+                },
+
+                //描画
+                draw: function (flgSkin) {
+                    this.drawPolygon(flgSkin);
                     this.drawJoint();
                 },
 
@@ -176,16 +180,25 @@
                 },
 
                 //ポリゴン群構築
-                drawPolygon: function () {
+                drawPolygon: function (flgSkin) {
                     var i, j;   //反復用
 
                     for (i = 0; i < this.Ni - 1; i++) {
                         for (j = 0; j < this.Nj - 1; j++) {
                             //４頂点の設定
-                            var strVertexA = this.Vertex[i][j].Skin.x + "," + this.Vertex[i][j].Skin.y;
-                            var strVertexB = this.Vertex[i][j + 1].Skin.x + "," + this.Vertex[i][j + 1].Skin.y;
-                            var strVertexC = this.Vertex[i + 1][j + 1].Skin.x + "," + this.Vertex[i + 1][j + 1].Skin.y;
-                            var strVertexD = this.Vertex[i + 1][j].Skin.x + "," + this.Vertex[i + 1][j].Skin.y;
+                            if (flgSkin) {
+                                //肌座標
+                                var strVertexA = this.stringVertex(this.Vertex[i][j].Skin);
+                                var strVertexB = this.stringVertex(this.Vertex[i][j + 1].Skin);
+                                var strVertexC = this.stringVertex(this.Vertex[i + 1][j + 1].Skin);
+                                var strVertexD = this.stringVertex(this.Vertex[i + 1][j].Skin);
+                            } else {
+                                //変形後肘座標
+                                var strVertexA = this.stringVertex(this.Vertex[i][j].Elbow);
+                                var strVertexB = this.stringVertex(this.Vertex[i][j + 1].Elbow);
+                                var strVertexC = this.stringVertex(this.Vertex[i + 1][j + 1].Elbow);
+                                var strVertexD = this.stringVertex(this.Vertex[i + 1][j].Elbow);
+                            }
 
                             //ポリゴンDOMの生成
                             var domPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
@@ -206,13 +219,53 @@
                             domSvg.appendChild(domPolygon);
                         }
                     }
+                },
+
+                //頂点座標を文字列化
+                stringVertex: function (vertex2d) {
+                    return vertex2d.x + "," + vertex2d.y;
                 }
             };
 
-            //ポリゴン表示
-            PolygonMesh.init(0, 100, 100);
-            PolygonMesh.init(50, 300, 100);
-            PolygonMesh.init(100, 500, 100);
+            //------------------------------
+            //座標
+            //------------------------------
+            var X0 = 100, X1 = 300, X2 = 500;
+            var Y0 = 100, Y1 = 400;
+ 
+            //------------------------------
+            //変形前
+            //------------------------------
+            PolygonMesh.init(0, X0, Y0);
+            PolygonMesh.draw(true);
+
+            //------------------------------
+            //50
+            //------------------------------
+            PolygonMesh.init(50, X1, Y0);
+            PolygonMesh.draw(true);
+
+            //上
+            PolygonMesh.init(0, X1, Y1);
+            PolygonMesh.draw(false);
+
+            //下
+            PolygonMesh.init(50, X1, Y1);
+            PolygonMesh.draw(false);
+
+            //------------------------------
+            //100
+            //------------------------------
+            PolygonMesh.init(100, X2, Y0);
+            PolygonMesh.draw(true);
+
+            //上
+            PolygonMesh.init(0, X2, Y1);
+            PolygonMesh.draw(false);
+
+            //下
+            PolygonMesh.init(100, X2, Y1);
+            PolygonMesh.draw(false);
         });
     </script>
 </body>
