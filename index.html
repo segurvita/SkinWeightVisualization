@@ -217,13 +217,13 @@
                     for (i = 0; i < this.Ni; i++) {
                         for (j = 0; j < this.Nj; j++) {
                             //ポリゴンDOMの生成
-                            var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                            this.Vertex[i][j].domLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
                             //寸法の設定
-                            domCircle.setAttribute("x1", this.Vertex[i][j].Org.x);
-                            domCircle.setAttribute("y1", this.Vertex[i][j].Org.y);
-                            domCircle.setAttribute("x2", this.Vertex[i][j].Elbow.x);
-                            domCircle.setAttribute("y2", this.Vertex[i][j].Elbow.y);
+                            this.Vertex[i][j].domLine.setAttribute("x1", this.Vertex[i][j].Org.x);
+                            this.Vertex[i][j].domLine.setAttribute("y1", this.Vertex[i][j].Org.y);
+                            this.Vertex[i][j].domLine.setAttribute("x2", this.Vertex[i][j].Elbow.x);
+                            this.Vertex[i][j].domLine.setAttribute("y2", this.Vertex[i][j].Elbow.y);
 
                             //外見の設定
                             var strColorR = Math.round((i / this.Ni) * 255);
@@ -231,10 +231,21 @@
                             var strColorB = 255 - Math.round((j / this.Nj) * 255);
                             var strColor = "rgb(" + strColorR + "," + strColorG + "," + strColorB + ")";
                             var strCircleStyle = "stroke:" + strColor + "; stroke-width:1";
-                            domCircle.setAttribute("style", strCircleStyle);
+                            this.Vertex[i][j].domLine.setAttribute("style", strCircleStyle);
 
                             //SVGタグに追加
-                            domSvg.appendChild(domCircle);
+                            domSvg.appendChild(this.Vertex[i][j].domLine);
+                        }
+                    }
+                },
+
+                //線描画
+                clearLine: function () {
+                    var i, j;   //反復用
+
+                    for (i = 0; i < this.Ni; i++) {
+                        for (j = 0; j < this.Nj; j++) {
+                            domSvg.removeChild(this.Vertex[i][j].domLine);
                         }
                     }
                 },
@@ -326,8 +337,8 @@
             var PolygonSub = new PolygonMesh(30, X1, Y1);
             PolygonSub.drawPolygon("Org", shoulderColor);
             PolygonSub.drawPolygon("Elbow", elbowColor);
-            PolygonSub.drawLine();
             PolygonSub.drawPolygon("Skin", skinColor);
+            PolygonSub.drawLine();
             PolygonSub.drawJoint();
 
             //------------------------------
@@ -353,6 +364,7 @@
                 PolygonSub.clearPolygon("Org");
                 PolygonSub.clearPolygon("Elbow");
                 PolygonSub.clearPolygon("Skin");
+                PolygonSub.clearLine();
                 PolygonSub.clearJoint();
             });
 
