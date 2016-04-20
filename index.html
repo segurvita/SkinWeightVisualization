@@ -15,16 +15,40 @@
             var domSvg = document.getElementById("svg");
 
             var PolygonMesh = {
-                Ni: 10,    //最大値
+                Ni: 9,    //最大値
                 Nj: 5,     //最大値
                 Fw: 30,
                 Fh: 30,
-                Vertex: [],
+                Vertex: [], //頂点群
+                Joint: [],  //関節群
 
                 //初期化
                 init: function () {
                     this.initVertex();
                     this.initPolygon();
+                },
+
+                //関節群構築
+                initJoint: function () {
+                    this.Joint = [];
+
+                    //肩
+                    this.Joint[0] = {
+                        x: this.Fw * (this.Nj - 1) / 2,
+                        y: 0
+                    };
+
+                    //肘
+                    this.Joint[1] = {
+                        x: this.Fw * (this.Nj - 1) / 2,
+                        y: this.Fh * (this.Ni - 1) / 2,
+                    };
+
+                    //手首
+                    this.Joint[2] = {
+                        x: this.Fw * (this.Nj - 1) / 2,
+                        y: this.Fh * (this.Ni - 1),
+                    };
                 },
 
                 //頂点群構築
@@ -38,7 +62,7 @@
                             this.Vertex[i][j] = {
                                 x: this.Fw * j, //x座標
                                 y: this.Fh * i, //y座標
-                                s: (1.0 - Math.Round(i / this.Ni))  //スキンウェイト
+                                s: (1.0 - Math.round(i / this.Ni))  //スキンウェイト
                             };
                         }
                     }
