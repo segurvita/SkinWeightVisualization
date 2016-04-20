@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <input id="inputAng" type="number" value="30" />
+        <input id="inputAng" type="range" value="0" min="-180" max="180"/>
     </div>
     <div>
         <svg id="svg" width="1000" height="1000">
@@ -343,18 +343,13 @@
             //初期ポリゴン
             //------------------------------
 
-            //変形前
-            var Polygon0 = new PolygonMesh(0, X0, Y0);
-            Polygon0.drawPolygon("Skin", skinColor);
-            Polygon0.drawJoint();
-
             //変形後メイン
-            var PolygonMain = new PolygonMesh(30, X1, Y0);
+            var PolygonMain = new PolygonMesh(0, X1, Y0);
             PolygonMain.drawPolygon("Skin", skinColor);
             PolygonMain.drawJoint();
 
             //変形後サブ
-            var PolygonSub = new PolygonMesh(30, X1, Y1);
+            var PolygonSub = new PolygonMesh(0, X1, Y1);
             PolygonSub.drawPolygon("Org", shoulderColor);
             PolygonSub.drawPolygon("Elbow", elbowColor);
             PolygonSub.drawPolygon("Skin", skinColor);
@@ -404,8 +399,6 @@
                 PolygonSub.drawLine();
                 PolygonSub.drawJoint();
             });
-
-
         });
     </script>
 </body>
