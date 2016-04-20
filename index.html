@@ -17,15 +17,18 @@
             var PolygonMesh = {
                 Ni: 9,    //最大値
                 Nj: 5,     //最大値
-                Fw: 30,
-                Fh: 30,
+                Fw: 30, //面の幅
+                Fh: 30, //面の高さ
+                Margin: 100,    //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
 
                 //初期化
                 init: function () {
+                    this.initJoint();
                     this.initVertex();
                     this.initPolygon();
+                    this.redrawJoint();
                 },
 
                 //関節群構築
@@ -34,21 +37,42 @@
 
                     //肩
                     this.Joint[0] = {
-                        x: this.Fw * (this.Nj - 1) / 2,
-                        y: 0
+                        x: this.Margin + this.Fw * (this.Nj - 1) / 2,
+                        y: this.Margin + 0
                     };
 
                     //肘
                     this.Joint[1] = {
-                        x: this.Fw * (this.Nj - 1) / 2,
-                        y: this.Fh * (this.Ni - 1) / 2,
+                        x: this.Margin + this.Fw * (this.Nj - 1) / 2,
+                        y: this.Margin + this.Fh * (this.Ni - 1) / 2,
                     };
 
                     //手首
                     this.Joint[2] = {
-                        x: this.Fw * (this.Nj - 1) / 2,
-                        y: this.Fh * (this.Ni - 1),
+                        x: this.Margin + this.Fw * (this.Nj - 1) / 2,
+                        y: this.Margin + this.Fh * (this.Ni - 1),
                     };
+                },
+
+                //関節群描画
+                redrawJoint: function () {
+                    for (var i = 0; i < 3; i++) {
+                        //ポリゴンDOMの生成
+                        var domCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+                        //寸法の設定
+                        domCircle.setAttribute("cx", this.Joint[i].x);
+                        domCircle.setAttribute("cy", this.Joint[i].y);
+                        domCircle.setAttribute("r", 10);
+
+                        //外見の設定
+                        domCircle.setAttribute("stroke", "black");
+                        domCircle.setAttribute("fill", "lime");
+                        domCircle.setAttribute("stroke-width", "2");
+
+                        //SVGタグに追加
+                        domSvg.appendChild(domCircle);
+                    }
                 },
 
                 //頂点群構築
@@ -60,8 +84,8 @@
                         this.Vertex[i] = [];
                         for (j = 0; j < this.Nj; j++) {
                             this.Vertex[i][j] = {
-                                x: this.Fw * j, //x座標
-                                y: this.Fh * i, //y座標
+                                x: this.Margin + this.Fw * j, //x座標
+                                y: this.Margin + this.Fh * i, //y座標
                                 s: (1.0 - Math.round(i / this.Ni))  //スキンウェイト
                             };
                         }
