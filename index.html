@@ -138,8 +138,8 @@
                             var Ss = this.Vertex[i][j].s;
 
                             //肘座標系
-                            var Ex = this.Vertex[i][j].orgX - this.Joint[1].x + this.Joint[1].x;
-                            var Ey = this.Vertex[i][j].orgY - this.Joint[1].y + this.Joint[1].y;
+                            var Ex = (this.Vertex[i][j].orgX - this.Joint[1].x) * Math.cos(this._arg) + this.Joint[1].x;
+                            var Ey = (this.Vertex[i][j].orgY - this.Joint[1].y) * Math.cos(this._arg) + this.Joint[1].y;
                             var Es = 1 - this.Vertex[i][j].s;
 
                             //重み付け
