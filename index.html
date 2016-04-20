@@ -41,8 +41,8 @@
                 },
 
                 //描画
-                draw: function (flgSkin) {
-                    this.drawPolygon(flgSkin);
+                draw: function (flgSkin, color) {
+                    this.drawPolygon(flgSkin, color);
                     this.drawJoint();
                 },
 
@@ -180,7 +180,7 @@
                 },
 
                 //ポリゴン群構築
-                drawPolygon: function (mode) {
+                drawPolygon: function (mode, color) {
                     var i, j;   //反復用
 
                     for (i = 0; i < this.Ni - 1; i++) {
@@ -199,9 +199,9 @@
                             domPolygon.setAttribute("points", strPolygonPoints);
 
                             //見た目の設定
-                            var strPolygonColorR = 252 - Math.round(j * 180 / this.Nj);
-                            var strPolygonColorG = 226 - Math.round(j * 180 / this.Nj);
-                            var strPolygonColorB = 196 - Math.round(j * 180 / this.Nj);
+                            var strPolygonColorR = color.r - Math.round(j * 180 / this.Nj);
+                            var strPolygonColorG = color.g - Math.round(j * 180 / this.Nj);
+                            var strPolygonColorB = color.b - Math.round(j * 180 / this.Nj);
                             var strPolygonColor = "rgba(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ", 0.5)";
                             var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
                             domPolygon.setAttribute("style", strPolygonStyle);
@@ -223,34 +223,37 @@
             //------------------------------
             var X0 = 100, X1 = 300, X2 = 600;
             var Y0 = 100, Y1 = 400;
+            var skinColor = { r: 252, g: 226, b: 196 };
+            var shoulderColor = { r: 196, g: 252, b: 226 };
+            var elbowColor = { r: 226, g: 196, b: 252 };
 
             //------------------------------
             //変形前
             //------------------------------
             PolygonMesh.init(0, X0, Y0);
-            PolygonMesh.draw("Skin");
+            PolygonMesh.draw("Skin", skinColor);
 
             //------------------------------
             //50
             //------------------------------
             PolygonMesh.init(50, X1, Y0);
-            PolygonMesh.draw("Skin");
+            PolygonMesh.draw("Skin", skinColor);
 
             //上
             PolygonMesh.init(50, X1, Y1);
-            PolygonMesh.draw("Org");
-            PolygonMesh.draw("Elbow");
+            PolygonMesh.draw("Org", shoulderColor);
+            PolygonMesh.draw("Elbow", elbowColor);
 
             //------------------------------
             //100
             //------------------------------
             PolygonMesh.init(100, X2, Y0);
-            PolygonMesh.draw("Skin");
+            PolygonMesh.draw("Skin", skinColor);
 
             //上
             PolygonMesh.init(100, X2, Y1);
-            PolygonMesh.draw("Org");
-            PolygonMesh.draw("Elbow");
+            PolygonMesh.draw("Org", shoulderColor);
+            PolygonMesh.draw("Elbow", elbowColor);
         });
     </script>
 </body>
