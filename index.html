@@ -15,17 +15,26 @@
             var domSvg = document.getElementById("svg");
 
             var PolygonMesh = {
-                arg: 30 * (Math.PI / 180),   //角度
+                _arg: 0,   //角度
                 Ni: 9,    //最大値
                 Nj: 5,     //最大値
                 Fw: 30, //面の幅
                 Fh: 30, //面の高さ
-                Margin: 100,    //余白
+                _Mx: 100,    //余白
+                _My: 100,    //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
 
                 //初期化
-                init: function () {
+                init: function (numArg, numMarginX, numMarginY) {
+                    if (numArg === null || numArg === void 0) {
+                        this._arg = 0;
+                    } else {
+                        this._arg = numArg * (Math.PI / 180);
+                    }
+                    this._Mx = numMarginX;
+                    this._My = numMarginY;
+
                     this.initJoint();
                     this.initVertex();
                     this.applySkinWeight();
@@ -39,21 +48,21 @@
 
                     //肩
                     this.Joint[0] = {
-                        x: this.Margin + this.Fw * (this.Nj - 1) / 2,
-                        y: this.Margin + 0
+                        x: this._Mx + this.Fw * (this.Nj - 1) / 2,
+                        y: this._My
                     };
 
                     //肘
                     this.Joint[1] = {
-                        x: this.Margin + this.Fw * (this.Nj - 1) / 2,
-                        y: this.Margin + this.Fh * (this.Ni - 1) / 2,
+                        x: this._Mx + this.Fw * (this.Nj - 1) / 2,
+                        y: this._My + this.Fh * (this.Ni - 1) / 2,
                     };
 
                     //手首
                     var armLength = this.Fh * (this.Ni - 1) / 2;
                     this.Joint[2] = {
-                        x: this.Joint[1].x + armLength * Math.sin(this.arg),
-                        y: this.Joint[1].y + armLength * Math.cos(this.arg),
+                        x: this.Joint[1].x + armLength * Math.sin(this._arg),
+                        y: this.Joint[1].y + armLength * Math.cos(this._arg),
                     };
                 },
 
@@ -89,8 +98,8 @@
                             this.Vertex[i][j] = {
                                 x: 0, //x座標
                                 y: 0, //y座標
-                                orgX: this.Margin + this.Fw * j, //x座標の初期値
-                                orgY: this.Margin + this.Fh * i, //y座標の初期値
+                                orgX: this._Mx + this.Fw * j, //x座標の初期値
+                                orgY: this._My + this.Fh * i, //y座標の初期値
                                 s: (1.0 - Math.round(i / this.Ni)),  //スキンウェイト
                             };
                         }
@@ -154,8 +163,9 @@
                 }
             };
 
-            //初期化
-            PolygonMesh.init();
+            //ポリゴン表示
+            PolygonMesh.init(30, 100, 100);
+            PolygonMesh.init(45, 300, 100);
         });
     </script>
 </body>
