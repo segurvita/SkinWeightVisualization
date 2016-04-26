@@ -26,8 +26,13 @@
                 Nj: 5,      //最大値
                 SkinWeight: [],
 
-                //スキンウェイト群構築
+                //初期化
                 init: function () {
+                    this.initSkinWeight();
+                },
+
+                //スキンウェイト群構築
+                initSkinWeight: function () {
                     var i, j;   //反復用
 
                     //頂点群構築
