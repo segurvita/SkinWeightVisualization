@@ -25,7 +25,26 @@
                 Ni: 9,      //最大値
                 Nj: 5,      //最大値
                 SkinWeight: [],
+
+                //スキンウェイト群構築
+                init: function () {
+                    var i, j;   //反復用
+
+                    //頂点群構築
+                    SkinMesh.SkinWeight = [];
+                    for (i = 0; i < SkinMesh.Ni; i++) {
+                        //スキンウェイト
+                        var sw = 1 - i / (SkinMesh.Ni - 1);
+
+                        SkinMesh.SkinWeight[i] = [];
+                        for (j = 0; j < SkinMesh.Nj; j++) {
+                            //初期化
+                            SkinMesh.SkinWeight[i][j] = sw;
+                        }
+                    }
+                },
             };
+            SkinMesh.init();
 
             //------------------------------
             //PolygonMeshクラス
@@ -80,9 +99,6 @@
 
                     //頂点群初期化
                     this.initVertex();
-
-                    //スキンウェイト初期化
-                    this.initSkinWeight();
 
                     //スキンウェイト反映
                     this.applySkinWeight();
@@ -143,30 +159,6 @@
                                 },
                                 domLine: null
                             };
-                        }
-                    }
-                },
-
-                //スキンウェイト群構築
-                initSkinWeight: function () {
-                    var i, j;   //反復用
-
-                    //骨の長さ
-                    var boneLength = (this.Joint[1].y - this.Joint[0].y) * 2;
-
-                    //頂点群構築
-                    SkinMesh.SkinWeight = [];
-                    for (i = 0; i < SkinMesh.Ni; i++) {
-                        //y座標の初期値
-                        var OrgY = this._My + this.Fh * i;
-
-                        //スキンウェイト
-                        var sw = 1 - (OrgY - this.Joint[0].y) / boneLength;
-
-                        SkinMesh.SkinWeight[i] = [];
-                        for (j = 0; j < SkinMesh.Nj; j++) {
-                            //初期化
-                            SkinMesh.SkinWeight[i][j] = sw;
                         }
                     }
                 },
