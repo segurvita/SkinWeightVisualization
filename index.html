@@ -56,6 +56,7 @@
                 _My: 0,     //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
+                SkinWeight: [],
 
                 //角度設定
                 changeAngle: function (numArg) {
@@ -73,6 +74,9 @@
                     this.initVertex();
 
                     //スキンウェイト初期化
+                    this.initSkinWeight();
+
+                    //スキンウェイト反映
                     this.applySkinWeight();
                 },
 
@@ -107,25 +111,16 @@
                 initVertex: function () {
                     var i, j;   //反復用
 
-                    //骨の長さ
-                    var boneLength = (this.Joint[1].y - this.Joint[0].y) * 2;
-
                     //頂点群構築
                     this.Vertex = [];
                     for (i = 0; i < this.Ni; i++) {
-                        //y座標の初期値
-                        var OrgY = this._My + this.Fh * i;
-
-                        //スキンウェイト
-                        var sw = 1 - (OrgY - this.Joint[0].y) / boneLength;
-
                         this.Vertex[i] = [];
                         for (j = 0; j < this.Nj; j++) {
                             //初期化
                             this.Vertex[i][j] = {
                                 Org: {
                                     x: this._Mx + this.Fw * j, //x座標の初期値
-                                    y: OrgY, //y座標の初期値
+                                    y: this._My + this.Fh * i, //y座標の初期値
                                     domPolygon: null
                                 },
                                 Elbow: {
@@ -138,9 +133,32 @@
                                     y: 0,
                                     domPolygon: null
                                 },
-                                s: sw,
                                 domLine: null
                             };
+                        }
+                    }
+                },
+
+                //スキンウェイト群構築
+                initSkinWeight: function () {
+                    var i, j;   //反復用
+
+                    //骨の長さ
+                    var boneLength = (this.Joint[1].y - this.Joint[0].y) * 2;
+
+                    //頂点群構築
+                    this.SkinWeight = [];
+                    for (i = 0; i < this.Ni; i++) {
+                        //y座標の初期値
+                        var OrgY = this._My + this.Fh * i;
+
+                        //スキンウェイト
+                        var sw = 1 - (OrgY - this.Joint[0].y) / boneLength;
+
+                        this.SkinWeight[i] = [];
+                        for (j = 0; j < this.Nj; j++) {
+                            //初期化
+                            this.SkinWeight[i][j] = sw;
                         }
                     }
                 },
@@ -155,7 +173,7 @@
                             var S = {
                                 x: this.Vertex[i][j].Org.x,
                                 y: this.Vertex[i][j].Org.y,
-                                s: this.Vertex[i][j].s
+                                s: this.SkinWeight[i][j]
                             };
 
                             //変形前肘座標系
@@ -172,7 +190,7 @@
                             var E = {
                                 x: D.x * Cos + D.y * Sin + this.Joint[1].x,
                                 y: -D.x * Sin + D.y * Cos + this.Joint[1].y,
-                                s: 1 - this.Vertex[i][j].s
+                                s: 1 - this.SkinWeight[i][j]
                             };
 
                             //肘座標保存
