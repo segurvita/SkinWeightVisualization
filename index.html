@@ -5,33 +5,36 @@
     <title>SVG Test</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <style type="text/css">
+        .box{
+            width:620px;
+            margin:10px;
+            padding:10px;
+            background-color: #efefef
+        }
+
         #tableSkinWeight
         {
             border: solid 1px black;
             border-collapse: collapse;
         }
 
-            #tableSkinWeight *
-            {
-                border: solid 1px black;
-            }
-
-            .inputSkinWeight{
-                width:60px;
-                height:16px;
-            }
+        .inputSkinWeight
+        {
+            width: 60px;
+            height: 16px;
+        }
     </style>
 </head>
 <body>
-    <div>
+    <div class="box">
         <svg id="svg" width="620" height="420">
         </svg>
     </div>
-    <div>
+    <div class="box">
         角度<br />
         <input id="inputAng" type="range" value="0" min="-360" max="360" style="width:620px;"/>
     </div>
-    <div>
+    <div class="box">
         スキンウェイト
         <table id="tableSkinWeight" style="border:solid 1px;"></table>
     </div>
