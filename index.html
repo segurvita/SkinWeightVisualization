@@ -460,6 +460,11 @@
                     return false;
                 }
 
+                refreshPolygon(newAng);
+            });
+
+            //ポリゴン再描画
+            function refreshPolygon(newAng) {
                 //------------------------------
                 //クリア
                 //------------------------------
@@ -492,7 +497,7 @@
                 PolygonSub.drawPolygon("Skin", skinColor);
                 PolygonSub.drawLine();
                 PolygonSub.drawJoint();
-            });
+            }
         });
     </script>
 </body>
