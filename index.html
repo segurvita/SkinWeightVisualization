@@ -10,7 +10,12 @@
         </svg>
     </div>
     <div>
+        角度<br />
         <input id="inputAng" type="range" value="0" min="-360" max="360" style="width:620px;"/>
+    </div>
+    <div>
+        スキンウェイト
+        <table id="tableSkinWeight"></table>
     </div>
     <script type="text/javascript">
         $(function () {
@@ -29,6 +34,7 @@
                 //初期化
                 init: function () {
                     this.initSkinWeight();
+                    this.drawTable();
                 },
 
                 //スキンウェイト群構築
@@ -48,6 +54,24 @@
                         }
                     }
                 },
+
+                //テーブル描画
+                drawTable: function () {
+                    var i, j;   //反復用
+
+                    var strTable = '';
+                    for (i = 0; i < SkinMesh.Ni; i++) {
+                        strTable += '<tr>';
+                        for (j = 0; j < SkinMesh.Nj; j++) {
+                            strTable += '<td>';
+                            strTable += SkinMesh.SkinWeight[i][j];
+                            strTable += '</td>';
+                        }
+                        strTable += '</tr>';
+                    }
+
+                    $('#tableSkinWeight').html(strTable);
+                }
             };
             SkinMesh.init();
 
