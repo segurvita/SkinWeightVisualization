@@ -54,7 +54,6 @@
             //プロトタイプオブジェクト
             PolygonMesh.prototype = {
                 //固定値
-                Nj: 5,      //最大値
                 Fw: 30,     //面の幅
                 Fh: 30,     //面の高さ
 
@@ -94,14 +93,14 @@
 
                     //肩
                     this.Joint[0] = {
-                        x: this._Mx + this.Fw * (this.Nj - 1) / 2,
+                        x: this._Mx + this.Fw * (SkinMesh.Nj - 1) / 2,
                         y: this._My - this.Fh / 2,
                         domBone: null
                     };
 
                     //肘
                     this.Joint[1] = {
-                        x: this._Mx + this.Fw * (this.Nj - 1) / 2,
+                        x: this._Mx + this.Fw * (SkinMesh.Nj - 1) / 2,
                         y: this._My + this.Fh * (SkinMesh.Ni - 1) / 2,
                         domBone: null
                     };
@@ -123,7 +122,7 @@
                     this.Vertex = [];
                     for (i = 0; i < SkinMesh.Ni; i++) {
                         this.Vertex[i] = [];
-                        for (j = 0; j < this.Nj; j++) {
+                        for (j = 0; j < SkinMesh.Nj; j++) {
                             //初期化
                             this.Vertex[i][j] = {
                                 Org: {
@@ -164,7 +163,7 @@
                         var sw = 1 - (OrgY - this.Joint[0].y) / boneLength;
 
                         this.SkinWeight[i] = [];
-                        for (j = 0; j < this.Nj; j++) {
+                        for (j = 0; j < SkinMesh.Nj; j++) {
                             //初期化
                             this.SkinWeight[i][j] = sw;
                         }
@@ -176,7 +175,7 @@
                     var i, j;   //反復用
 
                     for (i = 0; i < SkinMesh.Ni; i++) {
-                        for (j = 0; j < this.Nj; j++) {
+                        for (j = 0; j < SkinMesh.Nj; j++) {
                             //肩座標系
                             var S = {
                                 x: this.Vertex[i][j].Org.x,
@@ -217,7 +216,7 @@
                     var i, j;   //反復用
 
                     for (i = 0; i < SkinMesh.Ni - 1; i++) {
-                        for (j = 0; j < this.Nj - 1; j++) {
+                        for (j = 0; j < SkinMesh.Nj - 1; j++) {
                             //４頂点の設定
                             var strVertexA = this.stringVertex(this.Vertex[i][j][mode]);
                             var strVertexB = this.stringVertex(this.Vertex[i][j + 1][mode]);
@@ -232,9 +231,9 @@
                             this.Vertex[i][j][mode].domPolygon.setAttribute("points", strPolygonPoints);
 
                             //見た目の設定
-                            var strPolygonColorR = color.r - Math.round(j * 180 / this.Nj);
-                            var strPolygonColorG = color.g - Math.round(j * 180 / this.Nj);
-                            var strPolygonColorB = color.b - Math.round(j * 180 / this.Nj);
+                            var strPolygonColorR = color.r - Math.round(j * 180 / SkinMesh.Nj);
+                            var strPolygonColorG = color.g - Math.round(j * 180 / SkinMesh.Nj);
+                            var strPolygonColorB = color.b - Math.round(j * 180 / SkinMesh.Nj);
                             var strPolygonColor = "rgba(" + strPolygonColorR + ", " + strPolygonColorG + ", " + strPolygonColorB + ", 0.5)";
                             var strPolygonStyle = "fill: " + strPolygonColor + "; stroke: black; stroke-width: 1";
                             this.Vertex[i][j][mode].domPolygon.setAttribute("style", strPolygonStyle);
@@ -250,7 +249,7 @@
                     var i, j;   //反復用
 
                     for (i = 0; i < SkinMesh.Ni - 1; i++) {
-                        for (j = 0; j < this.Nj - 1; j++) {
+                        for (j = 0; j < SkinMesh.Nj - 1; j++) {
                             domSvg.removeChild(this.Vertex[i][j][mode].domPolygon);
                         }
                     }
@@ -261,7 +260,7 @@
                     var i, j;   //反復用
 
                     for (i = 0; i < SkinMesh.Ni; i++) {
-                        for (j = 0; j < this.Nj; j++) {
+                        for (j = 0; j < SkinMesh.Nj; j++) {
                             //ポリゴンDOMの生成
                             this.Vertex[i][j].domLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
@@ -274,7 +273,7 @@
                             //外見の設定
                             var strColorR = Math.round((i / SkinMesh.Ni) * 255);
                             var strColorG = 155;
-                            var strColorB = 255 - Math.round((j / this.Nj) * 255);
+                            var strColorB = 255 - Math.round((j / SkinMesh.Nj) * 255);
                             var strColor = "rgb(" + strColorR + "," + strColorG + "," + strColorB + ")";
                             var strCircleStyle = "stroke:" + strColor + "; stroke-width:1";
                             this.Vertex[i][j].domLine.setAttribute("style", strCircleStyle);
@@ -290,7 +289,7 @@
                     var i, j;   //反復用
 
                     for (i = 0; i < SkinMesh.Ni; i++) {
-                        for (j = 0; j < this.Nj; j++) {
+                        for (j = 0; j < SkinMesh.Nj; j++) {
                             domSvg.removeChild(this.Vertex[i][j].domLine);
                         }
                     }
