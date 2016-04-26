@@ -89,7 +89,7 @@
                         for (j = 0; j < SkinMesh.Nj; j++) {
                             strTable += '<td>';
                             strTable += '<input type="number" class="inputSkinWeight" ';
-                            strTable += 'min="0" max="1" step="0.01" ';
+                            strTable += 'min="0" max="1" step="0.1" ';
                             strTable += 'value="' + SkinMesh.SkinWeight[i][j] + '" ';
                             strTable += 'data-i="' + i + '" ';
                             strTable += 'data-j="' + j + '" ';
@@ -116,7 +116,16 @@
                         var i = $(this).attr('data-i');
                         var j = $(this).attr('data-j');
 
+                        //スキンウェイト更新
                         SkinMesh.SkinWeight[i][j] = value;
+
+                        //角度入力取得
+                        var newAng = $('#inputAng').val();
+                        if (!isFinite(newAng)) {
+                            return false;
+                        }
+
+                        refreshPolygon(newAng);
                     });
                 },
             };
