@@ -15,6 +15,11 @@
             {
                 border: solid 1px black;
             }
+
+            .inputSkinWeight{
+                width:60px;
+                height:16px;
+            }
     </style>
 </head>
 <body>
@@ -77,7 +82,9 @@
                         strTable += '<tr>';
                         for (j = 0; j < SkinMesh.Nj; j++) {
                             strTable += '<td>';
+                            strTable += '<input type="number" class="inputSkinWeight" value="'
                             strTable += SkinMesh.SkinWeight[i][j];
+                            strTable += '" />';
                             strTable += '</td>';
                         }
                         strTable += '</tr>';
