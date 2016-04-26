@@ -5,11 +5,12 @@
     <title>SVG Test</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <style type="text/css">
-        .box{
-            width:620px;
-            margin:10px;
-            padding:10px;
-            background-color: #efefef
+        .box
+        {
+            width: 620px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #efefef;
         }
 
         #tableSkinWeight
@@ -26,17 +27,18 @@
     </style>
 </head>
 <body>
+    <h3>ポリゴン</h3>
     <div class="box">
-        <svg id="svg" width="620" height="420">
+        <svg id="svg" width="620" height="340">
         </svg>
     </div>
+    <h3>角度</h3>
     <div class="box">
-        角度<br />
-        <input id="inputAng" type="range" value="0" min="-360" max="360" style="width:620px;"/>
+        <input id="inputAng" type="range" value="0" min="-360" max="360" style="width: 620px;" />
     </div>
+    <h3>スキンウェイト</h3>
     <div class="box">
-        スキンウェイト
-        <table id="tableSkinWeight" style="border:solid 1px;"></table>
+        <table id="tableSkinWeight" style="border: solid 1px;"></table>
     </div>
     <script type="text/javascript">
         $(function () {
@@ -135,7 +137,7 @@
                 _My: 0,     //余白
                 Vertex: [], //頂点群
                 Joint: [],  //関節群
-                
+
 
                 //角度設定
                 changeAngle: function (numArg) {
@@ -404,7 +406,7 @@
             //座標
             //------------------------------
             var X0 = 100, X1 = 400;
-            var Y0 = 100;
+            var Y0 = 50;
             var skinColor = { r: 252, g: 226, b: 196 };
             var shoulderColor = { r: 196, g: 252, b: 226 };
             var elbowColor = { r: 226, g: 196, b: 252 };
