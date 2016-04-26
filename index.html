@@ -58,6 +58,7 @@
                 init: function () {
                     this.initSkinWeight();
                     this.drawTable();
+                    this.addChangeEvent();
                 },
 
                 //スキンウェイト群構築
@@ -87,16 +88,37 @@
                         strTable += '<tr>';
                         for (j = 0; j < SkinMesh.Nj; j++) {
                             strTable += '<td>';
-                            strTable += '<input type="number" class="inputSkinWeight" value="'
-                            strTable += SkinMesh.SkinWeight[i][j];
-                            strTable += '" />';
+                            strTable += '<input type="number" class="inputSkinWeight" ';
+                            strTable += 'min="0" max="1" step="0.01" ';
+                            strTable += 'value="' + SkinMesh.SkinWeight[i][j] + '" ';
+                            strTable += 'data-i="' + i + '" ';
+                            strTable += 'data-j="' + j + '" ';
+                            strTable += '/>';
                             strTable += '</td>';
                         }
                         strTable += '</tr>';
                     }
 
                     $('#tableSkinWeight').html(strTable);
-                }
+                },
+
+                //チェンジイベント
+                addChangeEvent: function () {
+                    $('.inputSkinWeight').off('change');
+                    $('.inputSkinWeight').on('change', function () {
+                        var value = $(this).val();
+
+                        if (!isFinite(value)) {
+                            return false;
+                        }
+
+                        //番号取得
+                        var i = $(this).attr('data-i');
+                        var j = $(this).attr('data-j');
+
+                        SkinMesh.SkinWeight[i][j] = value;
+                    });
+                },
             };
             SkinMesh.init();
 
