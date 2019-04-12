@@ -1,0 +1,2 @@
+# SkinWeightVisualization
+スキンウェイトの原理を理解するための可視化ツール
